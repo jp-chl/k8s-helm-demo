@@ -1,0 +1,36 @@
+service:
+  name: poc-nodets
+  spec:
+    type: LoadBalancer
+    selector:
+      app: poc-nodets
+    ports:
+      protocol: TCP
+      port: 80
+      targetPort: 4000
+
+nodejs:
+  replicas: 1
+  name: poc-nodets
+  label: poc-nodets
+  namespace: nstest
+  selectorMatchLabelApp: poc-nodets
+  templateLabelApp: poc-nodets
+  containerImageRegistrySource: nectiadocker2000/ts-express-mongo
+  containerImageRegistryVersion: v5
+  imagePullPolicy: Always
+  containerName: poc-nodets
+  containerPort: 4000
+  containerProtocol: TCP
+  livenessProbe:
+    httpGet:
+      path: /liveness
+      port: 4000
+    initialDelaySeconds: 5
+    periodSeconds: 3
+  readinessProbe:
+    httpGet:
+      path: /readiness
+      port: 4000
+    initialDelaySeconds: 5
+    periodSeconds: 8

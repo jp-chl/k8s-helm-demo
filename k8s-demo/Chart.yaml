@@ -1,0 +1,4 @@
+apiVersion: v2
+name: nectia-poc-helm-chart-template
+description: A helm example chart 
+version: 0.1.0
